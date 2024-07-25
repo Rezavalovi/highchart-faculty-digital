@@ -1,6 +1,6 @@
 const { User, Data } = require("../models");
 const { signToken } = require("../helpers/jwt");
-const { hashPassword, comparePassword } = require("../helpers/bcrypt");
+const { comparePassword } = require("../helpers/bcrypt");
 
 class Controller {
   static async login(req, res, next) {
@@ -37,6 +37,7 @@ class Controller {
         };
       }
       const access_token = signToken({ id: user.id });
+      console.log(access_token, "<<<<<<<");
 
       res.status(200).json({ access_token, id: user.id });
     } catch (error) {
