@@ -56,7 +56,6 @@ export default {
   });
   try {
     const token = localStorage.getItem('token');
-    console.log('Token:', token); // Tambahkan ini untuk debugging
     const response = await axios.get('http://localhost:3000/data', {
       headers: {
         Authorization: `Bearer ${token}`
