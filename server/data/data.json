@@ -1,0 +1,12 @@
+[
+	{ "year": 2015, "revenue": 800000, "profit": 200000 },
+	{ "year": 2016, "revenue": 900000, "profit": 220000 },
+	{ "year": 2017, "revenue": 1000000, "profit": 250000 },
+	{ "year": 2018, "revenue": 1100000, "profit": 270000 },
+	{ "year": 2019, "revenue": 1200000, "profit": 300000 },
+	{ "year": 2020, "revenue": 1300000, "profit": 320000 },
+	{ "year": 2021, "revenue": 1400000, "profit": 350000 },
+	{ "year": 2022, "revenue": 1500000, "profit": 370000 },
+	{ "year": 2023, "revenue": 1600000, "profit": 400000 },
+	{ "year": 2024, "revenue": 1700000, "profit": 420000 }
+]
