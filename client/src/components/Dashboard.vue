@@ -1,4 +1,3 @@
-<!-- src/components/Dashboard.vue -->
 <template>
   <div>
     <nav class="bg-gray-800 p-4">
@@ -12,9 +11,9 @@
       </div>
     </nav>
     <div class="p-8">
-    <div> 
-      <h1 class="text-2xl font-bold mb-4">Faculty Digital</h1>
-    </div>
+      <div>
+        <h1 class="text-2xl font-bold mb-4">Faculty Digital</h1>
+      </div>
       <highcharts :options="chartOptions"></highcharts>
     </div>
   </div>
@@ -34,39 +33,59 @@ export default {
     return {
       chartOptions: {
         chart: {
-          type: 'pie'
+          type: 'column' 
         },
         title: {
           text: 'Company Revenue/Profit'
         },
+        xAxis: {
+          categories: [],
+          title: {
+            text: 'Year'
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Amount'
+          }
+        },
         series: [{
-          name: 'Amount',
+          name: 'Revenue',
+          data: []
+        }, {
+          name: 'Profit',
           data: []
         }]
       }
     };
   },
   async mounted() {
-  Swal.fire({
-    icon: 'success',
-    title: 'Welcome!',
-    text: 'Welcome to the Dashboard!',
-    timer: 2000,
-    showConfirmButton: false
-  });
-  try {
-    const token = localStorage.getItem('token');
-    const response = await axios.get('http://localhost:3000/data', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+    Swal.fire({
+      icon: 'success',
+      title: 'Welcome!',
+      text: 'Welcome to the Dashboard!',
+      timer: 2000,
+      showConfirmButton: false
     });
-    const data = response.data.map(item => ({ name: `Year ${item.year}`, y: item.revenue }));
-    this.chartOptions.series[0].data = data;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-},
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:3000/data', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const categories = response.data.map(item => `Year ${item.year}`);
+      const revenueData = response.data.map(item => item.revenue);
+      const profitData = response.data.map(item => item.profit);
+
+      this.chartOptions.xAxis.categories = categories;
+      this.chartOptions.series[0].data = revenueData;
+      this.chartOptions.series[1].data = profitData;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  },
   methods: {
     confirmLogout() {
       Swal.fire({
@@ -97,3 +116,9 @@ export default {
   }
 };
 </script>
+
+<style>
+html, body, #app {
+  height: 100%;
+}
+</style>
