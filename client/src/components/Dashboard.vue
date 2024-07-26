@@ -39,7 +39,7 @@ export default {
           text: 'Company Revenue/Profit'
         },
         xAxis: {
-          categories: [],
+          categories: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
           title: {
             text: 'Year'
           }
@@ -75,11 +75,31 @@ export default {
           Authorization: `Bearer ${token}`
         }
       });
-      const categories = response.data.map(item => `Year ${item.year}`);
-      const revenueData = response.data.map(item => item.revenue);
-      const profitData = response.data.map(item => item.profit);
 
-      this.chartOptions.xAxis.categories = categories;
+      // Create an object to store the data by year
+      const dataByYear = {};
+      response.data.forEach(item => {
+        dataByYear[item.year] = {
+          revenue: item.revenue,
+          profit: item.profit
+        };
+      });
+
+      // Fill data arrays based on fixed years
+      const revenueData = [];
+      const profitData = [];
+      const years = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+
+      years.forEach(year => {
+        if (dataByYear[year]) {
+          revenueData.push(dataByYear[year].revenue);
+          profitData.push(dataByYear[year].profit);
+        } else {
+          revenueData.push(0); 
+          profitData.push(0);  
+        }
+      });
+
       this.chartOptions.series[0].data = revenueData;
       this.chartOptions.series[1].data = profitData;
     } catch (error) {
